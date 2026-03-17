@@ -3,13 +3,13 @@ var cajaComentario = document.getElementById("cajaComentario");
 cajaComentario.addEventListener("keydown", function (evento) {
     if (evento.key === "Enter") {
         evento.preventDefault();
-        var texto = cajaComentario.value;
+        const texto = cajaComentario.value;
         alert(texto);
     }
 });
 
-var btnCambiarColor = document.getElementById("btnCambiarColor");
-var estadoColor = 0;
+const btnCambiarColor = document.getElementById("btnCambiarColor");
+let estadoColor = 0;
 
 btnCambiarColor.addEventListener("click", function () {
     estadoColor = (estadoColor + 1) % 3;
