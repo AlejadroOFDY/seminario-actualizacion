@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#contenedorPadre {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+textarea {
+    display: block;
+    margin-bottom: 15px;
+}
+
+#btnCambiarColor {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
