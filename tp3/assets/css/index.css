@@ -1,0 +1,266 @@
+:root {
+	--bg-start: #f4fff7;
+	--bg-end: #e3f5e8;
+	--panel-bg: #ffffff;
+	--panel-border: #d8e7db;
+	--text-main: #14331f;
+	--text-soft: #4d6957;
+	--green: #1f9d53;
+	--green-dark: #16703a;
+	--red: #d53b3b;
+	--red-dark: #9f2b2b;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--text-main);
+	background: linear-gradient(160deg, var(--bg-start), var(--bg-end));
+	min-height: 100vh;
+	padding: 32px 16px;
+}
+
+.app {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+	margin-top: 0;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 28px;
+}
+
+.cards-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
+	margin-bottom: 28px;
+}
+
+.card {
+	background: var(--panel-bg);
+	border: 1px solid var(--panel-border);
+	border-radius: 14px;
+	box-shadow: 0 8px 20px rgba(20, 51, 31, 0.08);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	min-height: 370px;
+}
+
+.card h3 {
+	margin-bottom: 12px;
+}
+
+.card-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.helper {
+	margin: 0;
+	color: var(--text-soft);
+	font-size: 0.9rem;
+}
+
+.columns-header {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 8px;
+	padding: 8px 12px;
+	border: 1px solid #d4e4d8;
+	border-radius: 10px;
+	background: #edf8f1;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: #2f5640;
+}
+
+.input-grid {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 8px;
+}
+
+input[type="text"] {
+	width: 100%;
+	border: 1px solid #bed2c3;
+	border-radius: 10px;
+	padding: 10px 12px;
+	font-size: 0.95rem;
+}
+
+input[type="number"] {
+	width: 100%;
+	border: 1px solid #bed2c3;
+	border-radius: 10px;
+	padding: 10px 12px;
+	font-size: 0.95rem;
+}
+
+input[type="text"]:focus {
+	outline: 2px solid #91cfaa;
+	border-color: #77b993;
+}
+
+input[type="number"]:focus {
+	outline: 2px solid #91cfaa;
+	border-color: #77b993;
+}
+
+.card-actions {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 14px;
+}
+
+.btn {
+	border: 0;
+	border-radius: 999px;
+	padding: 10px 20px;
+	font-weight: 600;
+	color: #fff;
+	cursor: pointer;
+	transition: transform 0.12s ease, filter 0.2s ease;
+}
+
+.btn:hover {
+	filter: brightness(1.03);
+	transform: translateY(-1px);
+}
+
+.btn:active {
+	transform: translateY(0);
+}
+
+.btn-primary {
+	background: var(--green);
+}
+
+.btn-primary:hover {
+	background: var(--green-dark);
+}
+
+.btn-danger {
+	background: var(--red);
+}
+
+.btn-danger:hover {
+	background: var(--red-dark);
+}
+
+.student-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: 1px solid #d4e4d8;
+	border-radius: 10px;
+	background: #fbfefc;
+	min-height: 160px;
+	max-height: 180px;
+	overflow-y: auto;
+}
+
+.student-list li {
+	border-bottom: 1px solid #e6efe9;
+	padding: 10px 12px;
+}
+
+.student-grid-list li {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	gap: 8px;
+	align-items: center;
+}
+
+.student-grid-list li.empty-state {
+	display: block;
+}
+
+.cell-number {
+	text-align: center;
+}
+
+.student-list li:last-child {
+	border-bottom: none;
+}
+
+.selectable-list li {
+	cursor: pointer;
+}
+
+.selectable-list li.selected {
+	background: #dff3e6;
+	font-weight: 600;
+}
+
+.delete-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.delete-item label {
+	cursor: pointer;
+}
+
+.full-list {
+	background: var(--panel-bg);
+	border: 1px solid var(--panel-border);
+	border-radius: 14px;
+	box-shadow: 0 8px 20px rgba(20, 51, 31, 0.08);
+	padding: 16px;
+}
+
+.list-box {
+	margin-top: 12px;
+}
+
+.empty-state {
+	color: var(--text-soft);
+	font-style: italic;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+@media (max-width: 980px) {
+	.cards-container {
+		grid-template-columns: 1fr;
+	}
+
+	.card {
+		min-height: 320px;
+	}
+
+	.columns-header,
+	.input-grid,
+	.student-grid-list li {
+		grid-template-columns: 1fr;
+	}
+
+	.cell-number {
+		text-align: left;
+	}
+}

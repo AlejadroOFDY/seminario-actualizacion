@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <title>tp3</title>
+</head>
+<body>
+    <main class="app">
+        <h1>Bienvenido, ingrese los nombres de sus estudiantes</h1>
+
+        <section class="cards-container" aria-label="Gestion de estudiantes">
+            <article class="card" id="caja1">
+                <h3>Agregar estudiantes</h3>
+                <div class="card-content">
+                    <div class="columns-header" aria-hidden="true">
+                        <span>Estudiante</span>
+                        <span>Edad</span>
+                        <span>Nota</span>
+                    </div>
+                    <div class="input-grid">
+                        <label for="add-student-name-input" class="sr-only">Nombre del estudiante</label>
+                        <input id="add-student-name-input" type="text" placeholder="Nombre" />
+                        <label for="add-student-age-input" class="sr-only">Edad del estudiante</label>
+                        <input id="add-student-age-input" type="number" min="1" placeholder="Edad" />
+                        <label for="add-student-grade-input" class="sr-only">Nota del estudiante</label>
+                        <input id="add-student-grade-input" type="number" min="0" max="10" step="0.1" placeholder="Nota" />
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button id="save-student-btn" class="btn btn-primary" type="button">Guardar</button>
+                </div>
+            </article>
+
+            <article class="card" id="caja2">
+                <h3>Editar estudiantes</h3>
+                <div class="card-content">
+                    <p class="helper">Seleccione un estudiante con click:</p>
+                    <div class="columns-header" aria-hidden="true">
+                        <span>Estudiante</span>
+                        <span>Edad</span>
+                        <span>Nota</span>
+                    </div>
+                    <ul id="edit-student-list" class="student-list selectable-list student-grid-list" aria-label="Seleccionar estudiante para editar"></ul>
+                    <div class="input-grid">
+                        <label for="edit-student-name-input" class="sr-only">Nuevo nombre del estudiante</label>
+                        <input id="edit-student-name-input" type="text" placeholder="Nombre" />
+                        <label for="edit-student-age-input" class="sr-only">Nueva edad del estudiante</label>
+                        <input id="edit-student-age-input" type="number" min="1" placeholder="Edad" />
+                        <label for="edit-student-grade-input" class="sr-only">Nueva nota del estudiante</label>
+                        <input id="edit-student-grade-input" type="number" min="0" max="10" step="0.1" placeholder="Nota" />
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button id="save-edit-btn" class="btn btn-primary" type="button">Editar</button>
+                </div>
+            </article>
+
+            <article class="card" id="caja3">
+                <h3>Eliminar estudiantes</h3>
+                <div class="card-content">
+                    <p class="helper">Seleccione uno o varios estudiantes:</p>
+                    <ul id="delete-student-list" class="student-list" aria-label="Seleccionar estudiantes para eliminar"></ul>
+                </div>
+                <div class="card-actions">
+                    <button id="delete-students-btn" class="btn btn-danger" type="button">Eliminar</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="full-list" aria-label="Lista general de estudiantes">
+            <h2>Lista de alummnos</h2>
+            <div class="list-box">
+                <div class="columns-header" aria-hidden="true">
+                    <span>Estudiante</span>
+                    <span>Edad</span>
+                    <span>Nota</span>
+                </div>
+                <ul id="students-master-list" class="student-list student-grid-list"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>
