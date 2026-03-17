@@ -1,5 +1,8 @@
+# Entorno virtual
+.venv/
+
 # Parte 2 (servidor TP3)
-tp3/servidor.py
+
 tp3/session_data/
 
 # Logs de pruebas locales
