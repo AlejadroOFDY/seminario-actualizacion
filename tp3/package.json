@@ -1,0 +1,17 @@
+{
+  "name": "tp3-server",
+  "version": "1.0.0",
+  "description": "Servidor para TP3 con gestión de estudiantes",
+  "main": "servidor.js",
+  "scripts": {
+    "start": "node servidor.js",
+    "dev": "node servidor.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cookie-parser": "^1.4.6"
+  }
+}
