@@ -1,6 +1,13 @@
-# Parte 2 (servidor TP3)
+# Entorno virtual Python
+.venv/
+
+# Parte 2 (servidor TP3 - Python)
 tp3/servidor.py
 tp3/session_data/
+
+# Parte 2 (servidor TP3 - Node.js)
+tp3/node_modules/
+tp3/package-lock.json
 
 # Logs de pruebas locales
 tp3/server_err.log
