@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma y Multiplicación de Matrices (Backend Node.js)</title>
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Suma y Multiplicación de Matrices</h1>
+        <p class="subtitulo">Versión Backend Node.js</p>
+        
+        <!-- Primera Matriz -->
+        <div class="matriz-section">
+            <h2>Primera Matriz</h2>
+            <div class="input-group">
+                <label for="filas1">N° de Filas:</label>
+                <input type="number" id="filas1" min="1" placeholder="Ej: 3">
+                <span class="error-message" id="error-filas1"></span>
+            </div>
+            <div class="input-group">
+                <label for="columnas1">N° de Columnas:</label>
+                <input type="number" id="columnas1" min="1" placeholder="Ej: 3">
+                <span class="error-message" id="error-columnas1"></span>
+            </div>
+            <button class="btn-generar" id="btn-generar1">Generar</button>
+            <div id="matriz1-container" class="matriz-container"></div>
+        </div>
+
+        <!-- Segunda Matriz -->
+        <div class="matriz-section">
+            <h2>Segunda Matriz</h2>
+            <div class="input-group">
+                <label for="filas2">N° de Filas:</label>
+                <input type="number" id="filas2" min="1" placeholder="Ej: 3">
+                <span class="error-message" id="error-filas2"></span>
+            </div>
+            <div class="input-group">
+                <label for="columnas2">N° de Columnas:</label>
+                <input type="number" id="columnas2" min="1" placeholder="Ej: 3">
+                <span class="error-message" id="error-columnas2"></span>
+            </div>
+            <button class="btn-generar" id="btn-generar2">Generar</button>
+            <div id="matriz2-container" class="matriz-container"></div>
+        </div>
+
+        <!-- Visualización de Matrices -->
+        <div class="matrices-display">
+            <h2>Matrices Generadas</h2>
+            <div class="matrices-row">
+                <div class="matriz-display" id="display-matriz1"></div>
+                <div class="matriz-display" id="display-matriz2"></div>
+            </div>
+        </div>
+
+        <!-- Operaciones -->
+        <div class="operaciones-section">
+            <h2>Operaciones</h2>
+            <div class="botones-opciones">
+                <button class="btn-operacion" id="btn-sumar">Sumar</button>
+                <button class="btn-operacion" id="btn-multiplicar">Multiplicar</button>
+            </div>
+            <div class="mensaje-error" id="error-operacion"></div>
+            <div class="loader" id="loader"></div>
+
+            <!-- Resultado -->
+            <div id="resultado-container" class="resultado-container" style="display: none;">
+                <h3>Resultado:</h3>
+                <div id="display-resultado" class="matriz-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
