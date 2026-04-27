@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Entrenamiento y Predicción con TFJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        max-width: 600px;
+      }
+      #status-div {
+        padding: 10px;
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      #interaction-div {
+        display: none; /* Oculto hasta que termine el entrenamiento */
+        padding: 15px;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+      }
+      #result-div {
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #155724;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Modelo Secuencial TFJS: y = 2x + 6</h3>
+    
+    <div id="status-div">Iniciando entrenamiento del modelo... por favor espera.</div>
+
+    <div id="interaction-div">
+      <label for="input-x">Ingresa un valor para X:</label>
+      <input type="number" id="input-x" placeholder="Ej: 5">
+      <button id="predict-btn">Predecir Y</button>
+      
+      <div id="result-div"></div>
+    </div>
+
+    <script type="module"> 
+      // Declaramos el modelo de forma global para poder usarlo en el botón después
+      let model;
+
+      async function run() {
+        // 1. Crear el modelo secuencial
+        model = tf.sequential();
+        model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+
+        // 2. Preparar el modelo (Pérdida y Optimizador)
+        model.compile({ loss: "meanSquaredError", optimizer: "sgd" });
+
+        // 3. Generar los datos de entrenamiento. 
+        // Fórmula: y = 2x + 6
+        // 9 Valores a partir de x = -6: [-6, -5, -4, -3, -2, -1, 0, 1, 2]
+        // Valores resultantes de Y:    [-6, -4, -2,  0,  2,  4, 6, 8, 10]
+        const xs = tf.tensor2d([-6, -5, -4, -3, -2, -1, 0, 1, 2], [9, 1]);
+        const ys = tf.tensor2d([-6, -4, -2, 0, 2, 4, 6, 8, 10], [9, 1]);
+
+        // 4. Entrenar el modelo con 350 épocas
+        await model.fit(xs, ys, { epochs: 350 });
+        
+        // 5. Comunicar que el entrenamiento terminó y mostrar la interfaz
+        const statusDiv = document.getElementById("status-div");
+        statusDiv.innerText = "¡Entrenamiento completado! El modelo ya está listo para ser utilizado.";
+        statusDiv.style.backgroundColor = "#cce5ff";
+        statusDiv.style.color = "#004085";
+        statusDiv.style.borderColor = "#b8daff";
+
+        // Mostrar la zona de ingreso de datos
+        document.getElementById("interaction-div").style.display = "block";
+      }
+
+      // Configurar el evento del botón para predecir
+      document.getElementById("predict-btn").addEventListener("click", () => {
+        const xValue = parseFloat(document.getElementById("input-x").value);
+        
+        // Validar que el usuario haya ingresado un número
+        if (isNaN(xValue)) {
+          document.getElementById("result-div").innerText = "Por favor, ingresa un número válido.";
+          return;
+        }
+
+        // Realizar la predicción
+        const valorInput = model.predict(tf.tensor2d([xValue], [1, 1]));
+        const resultado = valorInput.dataSync()[0];
+
+        // Mostrar el resultado en pantalla (redondeado a 2 decimales para mayor legibilidad)
+        document.getElementById("result-div").innerText = "La predicción para Y es: " + resultado.toFixed(2);
+      });
+
+      // Ejecutar el entrenamiento al cargar la página
+      run();
+    </script>
+  </body>
+</html>
