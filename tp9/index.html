@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Entrenamiento y Predicción con TFJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        max-width: 700px;
+        margin: auto;
+      }
+      #status-div {
+        padding: 10px;
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      #chart-container {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      #interaction-div {
+        display: none; /* Oculto hasta que termine el entrenamiento */
+        padding: 15px;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        border-radius: 5px;
+      }
+      #result-div {
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #155724;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Modelo Secuencial TFJS: y = 2x + 6</h3>
+    
+    <div id="status-div">Iniciando entrenamiento del modelo... observa la gráfica.</div>
+
+    <div id="chart-container">
+      <canvas id="lossChart"></canvas>
+    </div>
+
+    <div id="interaction-div">
+      <label for="input-x">Ingresa un valor para X:</label>
+      <input type="number" id="input-x" placeholder="Ej: 5">
+      <button id="predict-btn">Predecir Y</button>
+      
+      <div id="result-div"></div>
+    </div>
+
+    <script type="module"> 
+      let model;
+      
+      // Arreglos para guardar los datos de la gráfica
+      const epochValues = [];
+      const lossValues = [];
+
+      // Configuración inicial de Chart.js
+      const ctx = document.getElementById('lossChart').getContext('2d');
+      const lossChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: epochValues, // Eje X (Épocas)
+          datasets: [{
+            label: 'Pérdida (Loss)',
+            data: lossValues,  // Eje Y (Valor de pérdida)
+            borderColor: '#20c997',
+            backgroundColor: 'rgba(32, 201, 151, 0.2)',
+            borderWidth: 2,
+            pointRadius: 0, // Ocultar los puntos para ver una línea más fluida
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          animation: false, // Desactivar animación inicial para un renderizado más rápido en tiempo real
+          scales: {
+            x: { title: { display: true, text: 'Épocas' } },
+            y: { title: { display: true, text: 'Valor de Pérdida' } }
+          }
+        }
+      });
+
+      async function run() {
+        // 1. Crear el modelo secuencial
+        model = tf.sequential();
+        model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+
+        // 2. Preparar el modelo
+        model.compile({ loss: "meanSquaredError", optimizer: "sgd" });
+
+        // 3. Generar los datos de entrenamiento
+        const xs = tf.tensor2d([-6, -5, -4, -3, -2, -1, 0, 1, 2], [9, 1]);
+        const ys = tf.tensor2d([-6, -4, -2, 0, 2, 4, 6, 8, 10], [9, 1]);
+
+        // 4. Entrenar el modelo con callbacks
+        await model.fit(xs, ys, { 
+          epochs: 400,
+          callbacks: {
+            // Se ejecuta al final de cada época
+            onEpochEnd: async (epoch, logs) => {
+              // Guardar los valores en los arreglos
+              epochValues.push(epoch + 1);
+              lossValues.push(logs.loss);
+
+              // Actualizar la gráfica en tiempo real
+              lossChart.update();
+              
+              // Pequeño retardo opcional para que el navegador tenga tiempo de dibujar la gráfica
+              await tf.nextFrame(); 
+            }
+          }
+        });
+        
+        // 5. Finalizar y mostrar interfaz
+        const statusDiv = document.getElementById("status-div");
+        statusDiv.innerText = `¡Entrenamiento completado! Pérdida final: ${lossValues[lossValues.length - 1].toFixed(4)}`;
+        statusDiv.style.backgroundColor = "#cce5ff";
+        statusDiv.style.color = "#004085";
+        statusDiv.style.borderColor = "#b8daff";
+
+        document.getElementById("interaction-div").style.display = "block";
+      }
+
+      // Evento de predicción
+      document.getElementById("predict-btn").addEventListener("click", () => {
+        const xValue = parseFloat(document.getElementById("input-x").value);
+        if (isNaN(xValue)) {
+          document.getElementById("result-div").innerText = "Por favor, ingresa un número válido.";
+          return;
+        }
+
+        const valorInput = model.predict(tf.tensor2d([xValue], [1, 1]));
+        const resultado = valorInput.dataSync()[0];
+
+        document.getElementById("result-div").innerText = "La predicción para Y es: " + resultado.toFixed(2);
+      });
+
+      // Ejecutar
+      run();
+    </script>
+  </body>
+</html>
