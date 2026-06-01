@@ -6,11 +6,11 @@ Este proyecto contiene una aplicación de Tres en Raya (tic-tac-toe) contra un c
 
 ### Imagen 1: Apache iniciado en XAMPP
 
-![Apache iniciado en XAMPP](/simple-ttt-model/apache-iniciado.png)
+![Apache iniciado en XAMPP](apache-iniciado.png)
 
 ### Imagen 2: Tres en raya en el navegador
 
-![Tres en raya](/simple-ttt-model/tres-en-raya.png)
+![Tres en raya](tres-en-raya.png)
 
 Estas dos capturas forman parte de la explicación del trabajo: primero se inicia Apache en XAMPP y luego se abre la aplicación en `http://localhost/simple-ttt-model` para jugar.
 
