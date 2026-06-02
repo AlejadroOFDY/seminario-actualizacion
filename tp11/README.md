@@ -12,7 +12,7 @@ Este proyecto implementa un sistema distribuido en 3 máquinas virtuales (VMs) s
           │
           ▼
    [ BACKEND (VM2) ]  <════ (¿Existe 'X' en caché?) ════> [ CACHÉ REDIS (VM4) ]
-   (Calcula la ecuación si hay "Cache Miss")
+   (Calcula la ecuación si hay "Cache Miss")```
 
 🚀 Guía de Configuración Paso a Paso
 🧠 Fase 1: Capa de Caché (VM4 - Redis)
