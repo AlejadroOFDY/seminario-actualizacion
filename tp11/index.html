@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora con Caché (Redis)</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      .resultado {
+        margin-top: 20px;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .origen {
+        font-size: 16px;
+        color: gray;
+        margin-top: 10px;
+      }
+      .hit {
+        color: #28a745;
+        font-weight: bold;
+      }
+      .miss {
+        color: #dc3545;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Modelo Matemático: Y = 2x² + 5x + 3</h1>
+    <input
+      type="number"
+      id="valorX"
+      placeholder="Ingresa X"
+      style="padding: 10px; font-size: 18px"
+    />
+    <button onclick="consultar()" style="padding: 10px 20px; font-size: 18px">
+      Calcular
+    </button>
+
+    <div id="pantallaResultado" class="resultado"></div>
+    <div id="pantallaOrigen" class="origen"></div>
+
+    <script>
+      // Petición al Backend a través del puerto expuesto en Windows
+      const BACKEND_URL = "http://localhost:3000";
+
+      async function consultar() {
+        const x = document.getElementById("valorX").value;
+        if (x === "") return alert("Ingresa un número");
+
+        document.getElementById("pantallaResultado").innerText =
+          "Calculando...";
+
+        try {
+          const response = await fetch(`${BACKEND_URL}/calcular/${x}`);
+          const data = await response.json();
+
+          document.getElementById("pantallaResultado").innerText =
+            `Y = ${data.y}`;
+
+          // Mostrar visualmente si vino de caché o no
+          const claseOrigen = data.origen.includes("Caché") ? "hit" : "miss";
+          document.getElementById("pantallaOrigen").innerHTML =
+            `Origen: <span class="${claseOrigen}">${data.origen}</span>`;
+        } catch (error) {
+          document.getElementById("pantallaResultado").innerText =
+            "Error de conexión";
+        }
+      }
+    </script>
+  </body>
+</html>
