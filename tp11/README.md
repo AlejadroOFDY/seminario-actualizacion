@@ -12,7 +12,8 @@ Este proyecto implementa un sistema distribuido en 3 máquinas virtuales (VMs) s
           │
           ▼
    [ BACKEND (VM2) ]  <════ (¿Existe 'X' en caché?) ════> [ CACHÉ REDIS (VM4) ]
-   (Calcula la ecuación si hay "Cache Miss")```
+   (Calcula la ecuación si hay "Cache Miss")
+```
 
 🚀 Guía de Configuración Paso a Paso
 🧠 Fase 1: Capa de Caché (VM4 - Redis)
@@ -20,8 +21,10 @@ Esta máquina se encargará de almacenar en memoria RAM los resultados recientes
 
 1 - Instalación:
 
-```sudo apt update
-sudo apt install redis-server -y```
+```
+sudo apt update
+sudo apt install redis-server -y
+```
 
 2 - Configuración de Red y Política de Caché (Investigación):
 Para permitir conexiones externas y limitar la memoria a las "últimas N consultas" (usando el algoritmo LRU), edita el archivo de configuración:
@@ -34,8 +37,10 @@ Desactiva el modo protegido (solo para entornos de desarrollo): protected-mode n
 
 Al final del archivo, agrega la política de desalojo de memoria:
 
-```maxmemory 2mb
-maxmemory-policy allkeys-lru```
+```
+maxmemory 2mb
+maxmemory-policy allkeys-lru
+```
 
 3 - Aplicar cambios:
 
@@ -52,13 +57,16 @@ El Backend orquesta la lógica: consulta a Redis primero, y si no existe el dato
 
 1 - Preparación del Entorno:
 
-```mkdir backend-calc && cd backend-calc
+```
+mkdir backend-calc && cd backend-calc
 npm init -y
-npm install express cors redis```
+npm install express cors redis
+```
 
 2 - Código de la API (index.js):
 
-```const express = require('express');
+```
+const express = require('express');
 const cors = require('cors');
 const { createClient } = require('redis');
 
@@ -103,7 +111,8 @@ app.get('/calcular/:x', async (req, res) => {
 
 app.listen(3000, () => {
     console.log('🚀 Backend Node.js escuchando en el puerto 3000');
-});```
+});
+```
 
 3 - ⚙️ Regla de VirtualBox (Puerto Backend):
 
@@ -117,7 +126,8 @@ También es posible crear un archivo html en el escritorio, pegar el código de 
 
 1 - Código del Frontend (index.html):
 
-```<!DOCTYPE html>
+```
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -162,7 +172,8 @@ También es posible crear un archivo html en el escritorio, pegar el código de 
         }
     </script>
 </body>
-</html>```
+</html>
+```
 
 🛠️ Bitácora de Errores Comunes y Soluciones
 Durante la implementación en VirtualBox se documentaron los siguientes fallos críticos:
