@@ -4,8 +4,7 @@ Este proyecto implementa un sistema distribuido en 3 máquinas virtuales (VMs) s
 
 ## 🗺️ Flujo de la Arquitectura (Request / Response)
 
-```
-[ Cliente / Navegador ]
+```[ Cliente / Navegador ]
           │
           ▼
    [ FRONTEND (VM3) ]
