@@ -1,7 +1,7 @@
 # 📚 Gestión de Calificaciones con Matrices Multidimensionales
 
 Trabajo práctico de la materia **Seminario de Actualización II 2026**.  
-Implementación en **Python** y **JavaScript** de un sistema de gestión de calificaciones usando matrices multidimensionales (listas dentro de listas).
+Implementación en **Python** o **JavaScript** de un sistema de gestión de calificaciones usando matrices multidimensionales (listas dentro de listas).
 
 ---
 

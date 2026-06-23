@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio B2 - y = 2x - 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Courier New", Courier, monospace;
+        background: #0f1a0f;
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+      h1 {
+        font-size: 1.4rem;
+        letter-spacing: 0.05em;
+        color: #4ade80;
+        margin-bottom: 0.4rem;
+        text-align: center;
+      }
+      .subtitle {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .card {
+        background: #142014;
+        border: 1px solid #1a4020;
+        border-radius: 8px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      label {
+        font-size: 0.8rem;
+        color: #999;
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+      input[type="number"] {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        background: #0f1a0f;
+        border: 1px solid #1a4020;
+        border-radius: 4px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 1rem;
+      }
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #4ade80;
+      }
+      .btn-group {
+        display: flex;
+        gap: 0.8rem;
+      }
+      button {
+        flex: 1;
+        padding: 0.65rem;
+        border: none;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 0.04em;
+        transition: opacity 0.15s;
+      }
+      button:hover {
+        opacity: 0.85;
+      }
+      button:active {
+        opacity: 0.7;
+      }
+      #btn-train {
+        background: #16a34a;
+        color: #fff;
+      }
+      #btn-predict {
+        background: #4ade80;
+        color: #0a1a0a;
+      }
+      #resultado {
+        font-size: 1rem;
+        color: #fde68a;
+        min-height: 1.4rem;
+        text-align: center;
+        border-top: 1px solid #1a4020;
+        padding-top: 0.8rem;
+      }
+      .hint {
+        font-size: 0.75rem;
+        color: #555;
+        border: 1px dashed #1a4020;
+        border-radius: 4px;
+        padding: 0.7rem 0.9rem;
+        line-height: 1.6;
+      }
+      .hint strong {
+        color: #4ade80;
+      }
+      .chart-wrap {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #1a4020;
+      }
+      canvas {
+        width: 100% !important;
+        height: 220px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>&#9881; Ejercicio B2 - Modelo Lineal</h1>
+    <p class="subtitle">El modelo aprende la formula <code>y = 2x - 3</code></p>
+
+    <div class="card">
+      <div>
+        <label>Paso 1 - Entrenamiento</label>
+        <div class="btn-group">
+          <button id="btn-train">Entrenar modelo</button>
+        </div>
+      </div>
+      <div>
+        <label for="input-x"
+          >Paso 2 - Ingresa un valor de X para predecir</label
+        >
+        <input type="number" id="input-x" placeholder="Ej: 10" />
+      </div>
+      <div class="btn-group">
+        <button id="btn-predict">Predecir Y</button>
+      </div>
+      <div id="resultado">- Resultado aqui -</div>
+      <div class="hint">
+        <strong>Pistas para completar el codigo:</strong><br />
+        &bull; El backend corre en <code>http://localhost:8008</code><br />
+      </div>
+      <div class="chart-wrap">
+        <canvas id="lossChart"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const API_URL = "http://localhost:8008";
+
+      const btnTrain = document.getElementById("btn-train");
+      const btnPredict = document.getElementById("btn-predict");
+      const inputX = document.getElementById("input-x");
+      const resultado = document.getElementById("resultado");
+      const lossChartCtx = document
+        .getElementById("lossChart")
+        .getContext("2d");
+
+      const lossChart = new Chart(lossChartCtx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "Pérdida",
+              data: [],
+              borderColor: "#4ade80",
+              backgroundColor: "rgba(74, 222, 128, 0.15)",
+              tension: 0.25,
+              fill: true,
+              pointRadius: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: "#e0e0e0" } },
+          },
+          scales: {
+            x: { ticks: { color: "#999" }, grid: { color: "#1a4020" } },
+            y: { ticks: { color: "#999" }, grid: { color: "#1a4020" } },
+          },
+        },
+      });
+
+      async function postJSON(url, data) {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data || {}),
+        });
+        return response.json();
+      }
+
+      async function entrenar() {
+        resultado.textContent = "Entrenando...";
+        try {
+          const data = await postJSON(`${API_URL}/train`);
+          lossChart.data.labels = data.losses.map((_, index) => index + 1);
+          lossChart.data.datasets[0].data = data.losses;
+          lossChart.update();
+          resultado.textContent = data.message;
+        } catch (error) {
+          resultado.textContent = "Error al entrenar: " + error.message;
+        }
+      }
+
+      async function predecir() {
+        const x = Number(inputX.value);
+        if (Number.isNaN(x)) {
+          resultado.textContent = "Ingresa un valor valido de X";
+          return;
+        }
+        try {
+          const data = await postJSON(`${API_URL}/predict`, { x });
+          resultado.textContent = `Para x = ${data.x}, y = ${data.y.toFixed(2)}`;
+        } catch (error) {
+          resultado.textContent = "Error al predecir: " + error.message;
+        }
+      }
+
+      btnTrain.addEventListener("click", entrenar);
+      btnPredict.addEventListener("click", predecir);
+    </script>
+  </body>
+</html>

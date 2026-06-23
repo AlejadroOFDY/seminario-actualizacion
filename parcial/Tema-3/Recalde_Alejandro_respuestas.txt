@@ -1,0 +1,30 @@
+1 - Cual es la función que inicia el entrenamiento de un modelo (justifique)
+	a- fit
+	b- compile
+	c- addlayer
+	d- Todas
+	c- Ninguna
+
+Respuesta: Fit - model.fit(), porque durante este paso se le pasan al modelo los datos de entradas y las respuestas esperadas, durante
+	   un número determinado de "épocas" (iteraciones) para que aprenda por sí solo.
+
+2 - Cual es el límite de neuronas en las capas ocultas de una red?
+	a- 8
+	b- 24
+	c- 16
+	d- Todas son correctas
+	e- Ninguna es correcta
+
+Respuesta: e, ninguna es correcta porque el límite lo establece el usuario, al encontrar la cantidad óptima.
+
+3 - Donde puedo ejecutar javascript ?, justifique su respuesta. 
+	a- Cliente 
+	b- Servidor
+	c- En todos lados 
+
+Respuesta: c, porque aunque originalmente nació para ser ejecutado del lado del cliente, hoy en día puede ser utilizado del lado del servidor utilizando node.js
+
+4 - Que tipo de aprendizaje utiliza el humano a diario, justifique la respuesta?
+
+Respuesta: el tipo de aprendizaje que utiliza el humano a diario es el no supervisado, puesto que procesamos información que viene sin etiquetas ni con una
+	   clave de respuestas.

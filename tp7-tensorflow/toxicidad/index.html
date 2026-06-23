@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Detector de Toxicidad</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- TensorFlow -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.0.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+</head>
+
+<body>
+
+  <h1>💬 Detector de Toxicidad</h1>
+
+  <input type="text" id="texto" placeholder="Escribí algo...">
+  <button id="btnAnalizar">Analizar</button>
+
+  <!-- mensaje dinámico -->
+<p id="resultado"></p> 
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>

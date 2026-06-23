@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detector de Camión</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- TensorFlow -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.0.0/dist/tf.min.js"></script>
+
+    <!-- Modelo -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🚛 Detector de Camión</h1>
+
+        <p>Subí una imagen para verificar si contiene un camión</p>
+
+        <!-- usuario sube imagen -->
+        <input type="file" id="inputImagen" accept="image/*">
+
+        <!-- preview -->
+        <img id="preview" alt="Vista previa">
+
+        <!-- botón -->
+        <button id="btnDetectar">
+            Analizar Imagen
+        </button>
+
+        <!-- resultado -->
+        <p id="resultado"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 6 - Modelo visual de perros</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Ejercicio 6</p>
+          <h1>Modelo visual que aprende razas de perros</h1>
+          <p class="lead">
+            El sistema descarga razas de perros desde la API, aprende sus
+            imágenes y luego identifica cuál se parece más a la imagen que
+            subes. Después muestra la raza detectada y una descripción breve.
+          </p>
+        </div>
+
+        <div class="preview-card">
+          <div class="preview-head">
+            <span>Vista previa</span>
+            <small id="fileLabel">Ningún archivo cargado</small>
+          </div>
+          <div class="preview-area">
+            <img id="imagePreview" alt="Vista previa de la imagen cargada" />
+            <div id="placeholder" class="placeholder">
+              Sube una imagen para verla aquí.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Entrenamiento e identificación</h2>
+          <p>
+            Primero entrena el modelo con los personajes disponibles. Luego sube
+            una imagen para identificarla.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="imageInput">Imagen del perro</label>
+          <input id="imageInput" type="file" accept="image/*" />
+        </div>
+
+        <div class="actions">
+          <button id="trainBtn" class="primary">Entrenar modelo</button>
+          <button id="identifyBtn" class="ghost">Identificar imagen</button>
+        </div>
+
+        <div class="actions">
+          <button id="clearBtn" class="ghost">Limpiar</button>
+        </div>
+
+        <div class="status-block">
+          <div id="status" class="status">
+            Carga una imagen y presiona “Entrenar modelo”.
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar"><span id="progressBar"></span></div>
+            <small id="progressText">Sin entrenamiento todavía</small>
+          </div>
+        </div>
+
+        <article id="resultCard" class="result-card">
+          <div class="result-visual">
+            <img id="characterImage" alt="Imagen del personaje" />
+          </div>
+          <div class="result-copy">
+            <h3 id="characterTitle">Sin resultados todavía</h3>
+            <p id="characterDescription">
+              Aquí aparecerá una breve descripción de la raza identificada.
+            </p>
+            <div class="meta-grid">
+              <div>
+                <span>Raza detectada</span><strong id="characterRace">-</strong>
+              </div>
+              <div>
+                <span>Tipo de dato</span><strong id="characterGender">-</strong>
+              </div>
+              <div><span>Fuente</span><strong id="characterKi">-</strong></div>
+              <div>
+                <span>Conjunto</span
+                ><strong id="characterAffiliation">-</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
